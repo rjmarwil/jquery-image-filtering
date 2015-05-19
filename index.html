@@ -6,6 +6,14 @@
     <script src="bower_components/jquery/dist/jquery.js" type='text/javascript'></script>
     <script src="bower_components/handlebars/handlebars.js" type='text/javascript'></script>
     <script src="bower_components/lodash/lodash.js" type='text/javascript'></script>
+    <script id="cabins-template" type="text/x-handlebars-template">
+      {{#each cabins}}
+      <article class="home" data-price="{{price}}">
+        <img src="img/{{src}}.jpg" />
+        <h4>{{display_price}}</h4>
+      </article>
+      {{/each}}
+    </script>
     <link href='http://fonts.googleapis.com/css?family=Cinzel+Decorative:400,700,900' rel='stylesheet' type='text/css'>
   </head>
 <body>
@@ -35,80 +43,6 @@
       <a href="#" class="high">High</a>
     </section>
     <section class="image-container">
-      <article class="home" data-price="20000">
-        <img src="img/one.jpg" />
-        <h4>$20,000</h4>
-      </article>
-
-      <article class="home" data-price="30000">
-        <img src="img/two.jpg" />
-        <h4>$30,000</h4>
-      </article>
-
-      <article class="home" data-price="40000">
-        <img src="img/three.jpg" />
-        <h4>$40,000</h4>
-      </article>
-
-      <article class="home" data-price="1000000">
-        <img src="img/four.jpg" />
-        <h4>$1,000,000</h4>
-      </article>
-
-      <article class="home" data-price="250000">
-        <img src="img/five.jpg" />
-        <h4>$250,000</h4>
-      </article>
-
-      <article class="home" data-price="90000">
-        <img src="img/six.jpg" />
-        <h4>$90,000</h4>
-      </article>
-
-      <article class="home" data-price="750000">
-        <img src="img/seven.jpg" />
-        <h4>$750,000</h4>
-      </article>
-
-      <article class="home" data-price="60000">
-        <img src="img/eight.jpg" />
-        <h4>$60,000</h4>
-      </article>
-
-      <article class="home" data-price="100000">
-        <img src="img/nine.jpg" />
-        <h4>$100,000</h4>
-      </article>
-
-      <article class="home" data-price="750000">
-        <img src="img/ten.jpg" />
-        <h4>$750,000</h4>
-      </article>
-
-      <article class="home" data-price="60000">
-        <img src="img/eleven.jpg" />
-        <h4>$60,000</h4>
-      </article>
-
-      <article class="home" data-price="1000">
-        <img src="img/twelve.jpg" />
-        <h4>$1,000</h4>
-      </article>
-
-      <article class="home" data-price="10000">
-        <img src="img/tiny1.jpg" />
-        <h4>$10,000</h4>
-      </article>
-
-      <article class="home" data-price="15000">
-        <img src="img/tiny2.jpg" />
-        <h4>$15,000</h4>
-      </article>
-
-      <article class="home" data-price="20000">
-        <img src="img/tiny3.jpg" />
-        <h4>$20,000</h4>
-      </article>
     </section>
   </section>
 </div>
