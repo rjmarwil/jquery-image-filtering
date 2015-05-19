@@ -43,64 +43,57 @@ $(document).ready(function() {
 	});
 
 	// Click Low button to sort prices from low to high
-	var lowToggle = function(){
-    $('.low').on('click', function(e){
-      e.preventDefault();
-
-      var myArray = $("article");
-      var count = 0;
-
-      myArray.sort(function (a, b) {
-        a = parseInt($(a).attr("data-price"), 10);
-        b = parseInt($(b).attr("data-price"), 10);
-        count += 2;
-
-        if(a > b) {
-            return 1;
-        } else if(a < b) {
-            return -1;
-        } else {
-            return 0;
-        }
-      });
-      $(".image-container").append(myArray);
-    });
-  };
-	lowToggle();
+  $('.low').on('click', function(e){
+    e.preventDefault();
+		var lowSorted = _.sortBy(cabins, 'price')
+    setCabins(lowSorted);
+  });
 
 	// Click High button to sort prices from high to low
-	var highToggle = function(){
-    $('.high').on('click', function(e){
-      e.preventDefault();
-
-      var myArray = $("article");
-      var count = 0;
-
-      myArray.sort(function (a, b) {
-        a = parseInt($(a).attr("data-price"), 10);
-        b = parseInt($(b).attr("data-price"), 10);
-        count += 2;
-
-        if(a > b) {
-            return -1;
-        } else if(a < b) {
-            return 1;
-        } else {
-            return 0;
-        }
-      });
-      $(".image-container").append(myArray);
-    });
-  };
-	highToggle();
+	$('.high').on('click', function(e){
+    e.preventDefault();
+		var highSorted = _.sortBy(cabins, 'price').reverse();
+    setCabins(highSorted);
+  });
 
 	// Sort cabins using checkboxes
-	var sortCabin = function() {
-		var price = [];
-
-		$("input[type='checkbox'][value='100000']").click(function() {
-			price.push(100000);
-		});
-	};
-	sortCabin();
+	$('.filters').on('click', 'input[type="checkbox"]', function(e) {
+	  // find the parent element
+	  var checkboxes = $(e.delegateTarget)
+	    // find all of the checkboxes
+	    .find('input[type="checkbox"]')
+	    // grab the checkedness and value
+	    .map(function(index, elem) {
+	      var jqElem = $(elem);
+	      return {
+	        checked: jqElem.prop('checked'),
+	        price: +jqElem.attr('value')
+	      };
+	    // pull out the results
+	    }).get();
+	  // make sure at least one checbox is checked
+	  if (!_.any(checkboxes, 'checked')) {
+	    setCabins(cabins);
+	    return;
+	  }
+	  // filter cabins
+	  var filtered = _.filter(cabins, function(cabin) {
+	    // see if the cabin price is in range of any of the checkboxes
+	    return _.any(checkboxes, function(checkbox, index) {
+	      if (!checkbox.checked) { return false; }
+	      // grab the previous checkbox
+	      var previous = checkboxes[index - 1];
+	      // make sure that were above the lower range
+	      var greaterThanPrev;
+	      // if previous exists checkbox, make sure were above it's price
+	      if (previous) { greaterThanPrev = cabin.price > previous.price; }
+	      // if it doesn't exist, assume there is no bottom threshold
+	      else          { greaterThanPrev = true; }
+	      // return whether or not we are in range
+	      return greaterThanPrev && cabin.price <= checkbox.price;
+	    });
+	  });
+	  // update the page
+	  setCabins(filtered);
+	});
 });
